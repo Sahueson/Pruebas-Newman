@@ -1,0 +1,4089 @@
+{
+	"info": {
+		"_postman_id": "c66f6838-4d86-4564-8895-23844023a2c2",
+		"name": "Pruebas Automatizadas",
+		"description": "> This collection features end-to-end tests that ensure the Intergalactic Bank API components function in an expected sequence. Check out the [Functional testing collection](https://www.postman.com/templates/f26ad070-d626-4d75-b151-7cbf1a48ed11/Functional-testing) and [Integration testing collection](https://www.postman.com/templates/6f788c17-067a-4074-a528-d07df1df9529/Integration-testing-%23example) for other test cases for this API. \n  \n\n## **🪐 Get started**\n\nThe fictional Intergalactic Bank Services team is responsible for testing the end-to-end workflows in this collection. You can use this collection to validate specific workflows for your team or figure out ways to increase your test coverage and make your applications more resilient.\n\nTo test the Intergalactic Bank API, you can:\n\n1. **Review tests and scripts:** Check out the [tests](https://learning.postman.com/docs/writing-scripts/test-scripts/) in the Scripts tab of a collection, folder, or request. You’ll also find additional steps in the Pre-request Script, such as for passing data between requests or building up POST request payloads.\n    \n2. **Run tests:** To run the collection, select Run collection from the collection menu. If you are interested in testing one of the use cases, select Run folder from the use case folder menu. Keep in mind that many of these tests contain logic that passes information between requests, and they are meant to be run in order from top to bottom. If you send the requests manually or out of order, your results may vary.\n    \n3. **Review test results:** Many of the test cases contain error messages to help debug service errors. If you’re using this collection as a pre-merge check, ensure that all tests are passing before submitting (and no, deleting the failing test cases isn’t an option 😉).\n    \n\nCheck out the additional sections below or select View complete documentation. For context-sensitive help with a folder or request, look for the documentation icon.\n\n## 🧑‍💻How your team can use this collection\n\n- **Add a mock server to speed up development:** Adding functionality to this service? Since this collection has example responses, you can add a mock server that will return the expected results. Start writing tests against the mock, and once your additions are live, you can swap out the URLs and have a live test suite.\n    \n- **Integrate tests with your CI/CD pipeline:** This comprehensive test suite is a great addition to your existing CI/CD pipeline. Generate the Postman CLI command from the Collection Runner and add this step to your existing checks each time you make a commit affecting this service.\n    \n- **Add a monitor:** If your team is contributing to or relying on this service, it’s a good idea to keep tabs on the status. Adding a monitor to this collection can give you confidence that the service is up and running and alert you to any breaking changes that may have occurred.\n    \n\n## 🔍 What we’re testing\n\n- A very common workflow is the transfer of funds between accounts. We have two scenarios: one which creates all resources and successfully transfers funds, and one which tries the transfer with insufficient funds.\n    \n- During these workflows, we are testing for data correctness, data types, and that data is successfully passed through the system during creation and retrieval.\n    \n\n## 🔒A note on authorization\n\nThis API uses an API key-based authorization. In this collection, we set the authorization at the collection level and generate a new API Key for each test run.\n\n## 👀 View and share run results\n\nInterested in seeing previous run results? We’re happy to share, and have a few ways for you to stay in the loop:\n\n- **Runs tab:** View past collection runs in the `Runs` tab of this collection. Here, you can see the results of past runs, including who ran them and whether it was via the Collection Runner or the CLI. You can also share individual run reports from this page.\n    \n- **Monitors:** If you have a monitor set up for this collection, you can see historical run information when you select the Monitors tab in the left sidebar. You can also have the results sent to Slack or other services when you set up a corresponding integration.\n    \n\n### 🤝Increase test coverage\n\nThe Intergalactic Bank Services team wants your team to have everything they need to successfully test our services with their applications. Is your team utilizing this API in a use case not represented here? Reach out to us on our internal Slack by tagging `@bank-services`. Or add an [inline comment](https://learning.postman.com/docs/collaborating-in-postman/working-with-your-team/discussing-your-work/) to this collection with your test case suggestions.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "29511381",
+		"_collection_link": "https://lhc-endpoints.postman.co/workspace/X-TAP~2f05aee4-d6c3-4280-937b-c7bd56d13d1e/collection/29511381-c66f6838-4d86-4564-8895-23844023a2c2?action=share&source=collection_link&creator=29511381"
+	},
+	"item": [
+		{
+			"name": "Datos necesarios para las pruebas",
+			"item": [
+				{
+					"name": "login admin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"pm.test(\"El usuario tiene un token para el resto de peticiones\", () =>{\r",
+									"    pm.expect(body.access_token).to.not.eql(null);\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"auth_token_admin\", body.access_token)\r",
+									"pm.environment.set(\"admin_ID\", body.id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"ivan.c@alphaxperience.io\",\r\n  \"password\": \"xtap123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"pm.test(\"El usuario tiene un token para el resto de peticiones\", () =>{\r",
+									"    pm.expect(body.access_token).to.not.eql(null);\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"auth_token_owner\", body.access_token)\r",
+									"pm.environment.set(\"userId_owner\", body.id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"antoniocabanillas92@gmail.com\",\r\n  \"password\": \"xtap123\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crear datos",
+			"item": [
+				{
+					"name": "Registro user",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomFirstName = pm.variables.replaceIn(\"userTEST{{$randomFirstName}}\");\r",
+									"pm.environment.set(\"userTest_FirstName\", randomFirstName);\r",
+									"\r",
+									"const randomLastName = pm.variables.replaceIn(\"userTEST{{$randomLastName}}\");\r",
+									"pm.environment.set(\"userTest_LastName\", randomLastName);\r",
+									"\r",
+									"function getRandomPhoneNumber() {\r",
+									"    const prefixArray = ['600', '601', '602', '603', '604', '605', '606', '607', '608', '609', '610', '611', '612', '613', '614', '615', '616', '617', '618', '619', '620', '621', '622', '623', '624', '625', '626', '627', '628', '629', '630', '631', '632', '633', '634', '635', '636', '637', '638', '639', '640', '641', '642', '643', '644', '645', '646', '647', '648', '649', '650'];\r",
+									"\r",
+									"    const randomPrefix = prefixArray[Math.floor(Math.random() * prefixArray.length)];\r",
+									"    const randomNumber = Math.floor(100000 + Math.random() * 900000);\r",
+									"\r",
+									"    return `+34 ${randomPrefix} ${randomNumber}`;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set('userTest_Phone', getRandomPhoneNumber());\r",
+									"\r",
+									"\r",
+									"const randomEmail = pm.variables.replaceIn(\"userTEST{{$randomEmail}}\");\r",
+									"pm.environment.set(\"userTest_Email\", randomEmail);\r",
+									"\r",
+									"const randomPassword = pm.variables.replaceIn(\"{{$randomPassword}}\");\r",
+									"pm.environment.set(\"userTest_Password\", randomPassword);\r",
+									"\r",
+									"const addressTEST = \"C. Gloria Fuertes, 28, 45223 Seseña, Toledo, Spain\";\r",
+									"pm.environment.set('userTest_Address', addressTEST)\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"/*pm.environment.set(\"auth_token_userTest\", body.access_token)\r",
+									"pm.environment.set(\"userTest_ID\", body.id)\r",
+									"pm.environment.set(\"userTest_uuid\", body.uuid)\r",
+									"pm.environment.set(\"userTest_Email\", body.email)\r",
+									"pm.environment.set(\"userTest_Password\", body.password)\r",
+									"pm.environment.set(\"userTest_Phone\", body.phone)\r",
+									"pm.environment.set(\"userTest_FirstName\", body.firstName)\r",
+									"pm.environment.set(\"userTest_LastName\", body.lastName)\r",
+									"pm.environment.set(\"userTest_Address\", body.address)\r",
+									"pm.environment.set(\"userTest_Role\", body.role)*/"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{userTest_Email}}\",\r\n    \"password\": \"{{userTest_Password}}\",\r\n    \"phone\": \"{{userTest_Phone}}\",\r\n    \"firstName\": \"{{userTest_FirstName}}\",\r\n    \"lastName\": \"{{userTest_LastName}}\",\r\n    \"address\": \"{{userTest_Address}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/signup",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login owner test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"pm.test(\"El usuario tiene un token para el resto de peticiones\", () =>{\r",
+									"    pm.expect(body.access_token).to.not.eql(null);\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"auth_token_ownerTEST\", body.access_token)\r",
+									"pm.environment.set(\"userTest_uuid\", body.id)\r",
+									"pm.environment.set(\"userTest_Role\", body.role)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{userTest_Email}}\",\r\n  \"password\": \"{{userTest_Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"// Save each field of the response into environment variables\r",
+									"pm.test(\"Save response fields into environment variables\", function () {\r",
+									"    var responseData = pm.response.json();\r",
+									"    \r",
+									"    // Save each field into environment variables\r",
+									"    pm.environment.set(\"userTest_uuid\", responseData.uuid);\r",
+									"    pm.environment.set(\"userTest_ID\", responseData.id);\r",
+									"    pm.environment.set(\"userTest_FirstName\", responseData.firstName);\r",
+									"    pm.environment.set(\"userTest_LastName\", responseData.lastName);\r",
+									"    pm.environment.set(\"userTest_Email\", responseData.email);\r",
+									"    pm.environment.set(\"userTest_Phone\", responseData.phone);\r",
+									"    pm.environment.set(\"userTest_Role\", responseData.role);\r",
+									"    pm.environment.set(\"userTest_StatusId\", responseData.statusId);\r",
+									"    pm.environment.set(\"userTest_Address\", responseData.address);\r",
+									"    pm.environment.set(\"userTest_City\", responseData.city);\r",
+									"    pm.environment.set(\"userTest_Country\", responseData.country);\r",
+									"    pm.environment.set(\"userTest_PostalCode\", responseData.postalCode);\r",
+									"    pm.environment.set(\"userTest_WebsiteUrl\", responseData.websiteUrl);\r",
+									"    pm.environment.set(\"userTest_IgUrl\", responseData.igUrl);\r",
+									"    pm.environment.set(\"userTest_FacebookUrll\", responseData.facebookUrl);\r",
+									"    pm.environment.set(\"userTest_TwitterUrll\", responseData.twitterUrl);\r",
+									"    pm.environment.set(\"userTest_LogoUrll\", responseData.logoUrl);\r",
+									"    pm.environment.set(\"userTest_Company\", responseData.company);\r",
+									"    pm.environment.set(\"userTest_Commerces\", responseData.commerces);\r",
+									"    pm.environment.set(\"userTest_ManagedCommerces\", responseData.managedCommerces);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userTest_uuid}}"
+							]
+						},
+						"description": "\n## Get User Details\n\nThis endpoint retrieves the details of a specific user identified by the `userUuid_ownerTEST`.\n\n### Request\n\n- Method: `GET`\n- URL: `{{url}}/users/{{userUuid_ownerTEST}}`\n\n### Response\n\n- Status: 200\n- Content-Type: application/json\n\n```json\n{\n    \"uuid\":\"\",\n    \"id\":0,\n    \"firstName\":\"\",\n    \"lastName\":\"\",\n    \"email\":\"\",\n    \"phone\":\"\",\n    \"role\":\"\",\n    \"statusId\":0,\n    \"address\":\"\",\n    \"city\":null,\n    \"country\":null,\n    \"postalCode\":null,\n    \"websiteUrl\":null,\n    \"igUrl\":null,\n    \"facebookUrl\":null,\n    \"twitterUrl\":null,\n    \"logoUrl\":null,\n    \"company\":null,\n    \"createdAt\":\"\",\n    \"updatedAt\":\"\",\n    \"commerces\":[],\n    \"managedCommerces\":[]\n}\n```\n\n### Data to be Saved\n\nThe response includes various user details such as `uuid`, `firstName`, `lastName`, `email`, `phone`, `role`, `statusId`, `address`, `createdAt`, and `updatedAt`. These details can be saved for further reference or processing.\n\n"
+					},
+					"response": []
+				},
+				{
+					"name": "create productCategory",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario crea un productCategorty correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"productCategoryTEST_Id\", body.id)\r",
+									"\r",
+									"pm.environment.set(\"productCategoryTEST_Name\", body.name)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"standTEST\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/productCategory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Se crea la Categoria correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"categoryTEST_Id\", body.id)\r",
+									"pm.environment.set(\"categoryTEST_name\", body.name)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"productCategory_Test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create productPacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El productPack se crea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"productPackTest_ID\", body.id)\r",
+									"pm.environment.set(\"productPackTest_uuid\", body.uuid)\r",
+									"pm.environment.set(\"productPackTest_Name\", body.name)\r",
+									"pm.environment.set(\"productPackTest_Value\", body.value)\r",
+									"pm.environment.set(\"productPackTest_statusId\", body.statusId)\r",
+									"pm.environment.set(\"productPackTest_FirstProduct_Quantity\", body.description[0].quantity)\r",
+									"pm.environment.set(\"productPackTest_FirstProduct_productCategoryId\", body.description[0].productCategoryId)\r",
+									"pm.environment.set(\"productPackTest_SecondProduct_Quantity\", body.description[1].quantity)\r",
+									"pm.environment.set(\"productPackTest_SecondProduct_productCategoryId\", body.description[1].productCategoryId)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"test\",\r\n  \"description\": [\r\n    {\r\n        \"quantity\": \"10\",\r\n        \"productCategoryId\": 1\r\n    },\r\n    {\r\n        \"quantity\": \"10\",\r\n        \"productCategoryId\": 2\r\n    }\r\n  ],\r\n  \"value\": 19.99,\r\n  \"statusId\": 23\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/productPacks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create commerce",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Se crea el commerce correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"commerceTEST_Id\", body.id)\r",
+									"pm.environment.set(\"commerceTEST_Uuid\", body.uuid)\r",
+									"pm.environment.set(\"commerceTEST_Status\", body.statusId)\r",
+									"pm.environment.set(\"commerceTEST_ShowFacebook\", body.showFacebook)\r",
+									"pm.environment.set(\"commerceTEST_ShowAddress\", body.showAddress)\r",
+									"pm.environment.set(\"commerceTEST_ActiveSubscription\", body.activeSubscription)\r",
+									"pm.environment.set(\"commerceTEST_IdGoogle\", body.idGoogle)\r",
+									"pm.environment.set(\"commerceTEST_Destination\", body.destination)\r",
+									"pm.environment.set(\"commerceTEST_UrlTripAdvisor\", body.urlTripAdvisor)\r",
+									"pm.environment.set(\"commerceTEST_UrlTrivago\", body.urlTrivago)\r",
+									"pm.environment.set(\"commerceTEST_UrlBooking\", body.urlBooking)\r",
+									"pm.environment.set(\"commerceTEST_UrlFacebook\", body.urlFacebook)\r",
+									"pm.environment.set(\"commerceTEST_UrlWebsite\", body.urlWebsite)\r",
+									"pm.environment.set(\"commerceTEST_UrlIg\", body.urlIg)\r",
+									"pm.environment.set(\"commerceTEST_UrlTwitter\", body.urlTwitter)\r",
+									"pm.environment.set(\"commerceTEST_Name\", body.name)\r",
+									"pm.environment.set(\"commerceTEST_Address\", body.address)\r",
+									"pm.environment.set(\"commerceTEST_City\", body.city)\r",
+									"pm.environment.set(\"commerceTEST_Country\", body.country)\r",
+									"pm.environment.set(\"commerceTEST_LogoUrl\", body.logoUrl)\r",
+									"pm.environment.set(\"commerceTEST_Status\", body.statusId)\r",
+									"pm.environment.set(\"commerceTEST_ProductPackUuid\", body.productPackUuid)\r",
+									"pm.environment.set(\"commerceTEST_CategoryId\", body.categoryId)\r",
+									"pm.environment.set(\"commerceTEST_UserUuid\", body.userUuid)\r",
+									"pm.environment.set(\"commerceTEST_ShowWebsite\", body.showWebsite)\r",
+									"pm.environment.set(\"commerceTEST_ShowIg\", body.showIg)\r",
+									"pm.environment.set(\"commerceTEST_ShowTwitter\", body.showTwitter)\r",
+									"pm.environment.set(\"commerceTEST_ShowLogo\", body.showLogo)\r",
+									"pm.environment.set(\"commerceTEST_Rating\", body.rating)\r",
+									"pm.environment.set(\"commerceTEST_TotalReviews\", body.totalReviews)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"destination\": \"google\",\r\n    \"idGoogle\": \"ChIJJ85yCpsFDg0RxikmjSahN5k\",\r\n    \"urlTripAdvisor\": null,\r\n    \"urlTrivago\": null,\r\n    \"urlBooking\": null,\r\n    \"urlFacebook\": null,\r\n    \"urlWebsite\": null,\r\n    \"urlIG\": null,\r\n    \"urlTwitter\": null,\r\n    \"name\": \"{{$randomCompanyName}}\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Toledo\",\r\n    \"country\": \"Spain\",\r\n    \"logo\": null,\r\n    \"productPackUuid\": \"{{productPackTest_uuid}}\",\r\n    \"userUuid\": \"{{userTest_uuid}}\",\r\n    \"showWebsite\": false,\r\n    \"showIg\": false,\r\n    \"showTwitter\": false,\r\n    \"showacebook\": false,\r\n    \"showAdress\": false,\r\n    \"showLogo\": false,\r\n    \"categoryId\": {{categoryTEST_Id}},\r\n    \"statusId\": 11,\r\n    \"activeSubscription\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerce",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update commerce para review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Se actualiza el commerce correctamente\", () =>{\r",
+									"    pm.response.to.have.status(202)\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"commerceTEST_Status\", body.data.statusId);\r",
+									"pm.environment.set(\"commerceTEST_ActiveSubscription\", body.data.activeSubscription);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"statusId\": 11,\r\n    \"activeSubscription\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "bulk create products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El producto se crea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"productTest_Id\", body[0].id)\r",
+									"pm.environment.set(\"productTest_Uuid\", body[0].uuid)\r",
+									"pm.environment.set(\"qrFileKeyTest\", body[0].qrFileKey)\r",
+									"pm.environment.set(\"urlRedirectTest\", body[0].urlRedirect)\r",
+									"pm.environment.set(\"productTest_productCategoryId\", body[0].productCategoryId)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"productCategoryId\": {{productCategoryTEST_Id}},\r\n    \"userUuid\": \"{{userTest_uuid}}\",\r\n    \"commerceUuid\": \"{{commerceTEST_Uuid}}\",\r\n    \"productPackUuid\": \"{{productPackTest_uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/products?quantity=1",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products"
+							],
+							"query": [
+								{
+									"key": "quantity",
+									"value": "1",
+									"description": "(admins only) This endpoint is to create cards. you can send an array with card objects or a quantity to create empty cards. when a card is created, a qr is created and associated to the created id with a redirection url."
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El employee se ha creado correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"})\r",
+									"//pm.environment.set(\"auth_token_userTest\", body.access_token)\r",
+									"pm.environment.set(\"employeeTest_ID\", body.data.id)\r",
+									"pm.environment.set(\"employeeTest_Uuid\", body.data.uuid)\r",
+									"pm.environment.set(\"employeeTest_Email\", body.data.email)\r",
+									"pm.environment.set(\"employeeTest_Phone\", body.data.phone)\r",
+									"pm.environment.set(\"employeeTest_Name\", body.data.name)\r",
+									"pm.environment.set(\"employeeTest_Position\", body.data.position)\r",
+									"pm.environment.set(\"employeeTest_commerceUuid\", body.data.commerceUuid)\r",
+									"pm.environment.set(\"employeeTest_ProductUuid\", body.data.productUuid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"employeeTest{{$randomEmail}}\",\r\n  \"phone\": \"+34611223344\",\r\n  \"name\": \"employee_name_test\",\r\n  \"position\": \"test_employee_position\",\r\n  \"commerceUuid\":\"{{commerceTEST_Uuid}}\",\r\n  \"productUuid\": \"{{productTest_Uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/employee",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get uploadURL",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Recibimos un OK en la respuesta\", ()=> {\r",
+									"    pm.response.to.have.status(201);\r",
+									"})\r",
+									"\r",
+									"pm.test(\"El campo uploadURL no viene vacio\", ()=> {\r",
+									"    pm.expect(body.uploadURL).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.test(\"El campo fileKey no viene vacio\", ()=> {\r",
+									"    pm.expect(body.fileKey).to.not.be.empty;\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"uploadURLTest\", body.uploadURL);\r",
+									"pm.environment.set(\"fileKeyTest\", body.fileKey);\r",
+									"\r",
+									"//console.log(body.body.uploadURL)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\"contentType\": \"application/jpg\",\r\n\t\"ext\": \"jpg\",\r\n    \"fileName\": \"groot\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/aws",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"aws"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assign manager to commerce Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Se asigna correctamente el manager al commerce\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"const body = pm.response.json();\r",
+									"\r",
+									"    pm.environment.set(\"managerTest_Uuid\", body.uuid);\r",
+									"    pm.environment.set(\"managerTest_Id\", body.id);\r",
+									"    pm.environment.set(\"managerTest_CommerceId\", body.commerceUuid);\r",
+									"    pm.environment.set(\"managerTest_AssignerUserUuid\", body.assignerUserUuid);\r",
+									"    pm.environment.set(\"managerTest_AssigmentData\", body.assignmentDate);\r",
+									"    pm.environment.set(\"managerTest_StatusId\", body.statusId);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"commerceUuid\": \"{{commerceTEST_Uuid}}\",\r\n  \"email\": \"{{$randomEmail}}\",\r\n  \"firstName\": \"{{$randomFirstName}}\",\r\n  \"lastName\": \"{{$randomLastName}}\",\r\n  \"phone\": \"+34 611223344\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerceManager",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerceManager"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "crear review",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"testNameReview{{$randomNamePrefix}}\",\r\n  \"email\": \"testReview{{$randomEmail}}\",\r\n  \"phone\": \"+34 611223344\",\r\n  \"productUuid\": \"{{productTest_Uuid}}\",\r\n  \"commerceUuid\": \"{{commerceTEST_Uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Traer datos",
+			"item": [
+				{
+					"name": "review de clients",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    pm.expect(body).to.be.an('array');\r",
+									"    body.forEach(user => {\r",
+									"        pm.expect(user).to.have.property('uuid');\r",
+									"        pm.expect(user).to.have.property('id');\r",
+									"        pm.expect(user).to.have.property('firstName');\r",
+									"        pm.expect(user).to.have.property('lastName');\r",
+									"        pm.expect(user).to.have.property('email');\r",
+									"        pm.expect(user).to.have.property('phone');\r",
+									"        pm.expect(user).to.have.property('role');\r",
+									"        pm.expect(user).to.have.property('statusId');\r",
+									"        pm.expect(user).to.have.property('address');\r",
+									"        pm.expect(user).to.have.property('city');\r",
+									"        pm.expect(user).to.have.property('country');\r",
+									"        pm.expect(user).to.have.property('postalCode');\r",
+									"        pm.expect(user).to.have.property('websiteUrl');\r",
+									"        pm.expect(user).to.have.property('igUrl');\r",
+									"        pm.expect(user).to.have.property('facebookUrl');\r",
+									"        pm.expect(user).to.have.property('twitterUrl');\r",
+									"        pm.expect(user).to.have.property('logoUrl');\r",
+									"        pm.expect(user).to.have.property('company');\r",
+									"        pm.expect(user).to.have.property('createdAt');\r",
+									"        pm.expect(user).to.have.property('updatedAt');\r",
+									"        pm.expect(user).to.have.property('totalXtapReviews');\r",
+									"        pm.expect(user).to.have.property('reviews');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.test(\"Reviews IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"lastReviewTEST_id\", body[0].reviews[0].id)\r",
+									"//console.log(body[0].reviews[0].id)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/clients",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"clients"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El mismo uuid que en la variable\", function () {\r",
+									"    pm.expect(body.uuid).to.equal(pm.environment.get(\"userTest_uuid\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El user tiene role owner\", function () {\r",
+									"    pm.expect(body.role).to.equal(pm.environment.get(\"userTest_Role\"));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.test(\"Reviews IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});\r",
+									"pm.environment.set(\"lastUserCreated_testReview\", body[0].uuid)\r",
+									"pm.environment.set(\"lastUserCreated_testReviewId\", body[0].id)\r",
+									"\r",
+									"//console.log(body[0].uuid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get refviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First reviews ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.test(\"Reviews IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reviews",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "count commerce products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/products/commerce/8863c322-21c2-464a-b39e-93eb6e4b9fc6/count",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products",
+								"commerce",
+								"8863c322-21c2-464a-b39e-93eb6e4b9fc6",
+								"count"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list commerce products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Los campos del producto corresponden con lo asignado\", function () {\r",
+									"    pm.expect(body[0].uuid).to.equal(pm.environment.get('productTest_Uuid'));\r",
+									"    pm.expect(body[0].id).to.equal(parseInt(pm.environment.get('productTest_Id')));\r",
+									"    pm.expect(body[0].qrFileKey).to.equal(pm.environment.get('qrFileKeyTest'));\r",
+									"    pm.expect(body[0].urlRedirect).to.equal(pm.environment.get('urlRedirectTest'));\r",
+									"    pm.expect(body[0].userUuid).to.equal(pm.environment.get('userTest_uuid'));\r",
+									"    pm.expect(body[0].commerceUuid).to.equal(pm.environment.get('commerceTEST_Uuid'));\r",
+									"    pm.expect(body[0].productCategoryId).to.equal(parseInt(pm.environment.get('productCategoryTEST_Id')));\r",
+									"    pm.expect(body[0].productPackUuid).to.equal(pm.environment.get('productPackTest_uuid'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Product IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"EL empleado esta asignado a la card\", function () {\r",
+									"\r",
+									"    pm.expect(body[0].employeeUuid).to.equal(pm.environment.get('employeeTest_Uuid'));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/products/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products",
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "list all products",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.test(\"Products IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/products",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reviews de un commerce con varias reviews",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First review ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.test(\"Reviews IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_owner}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reviews/commerce/{{commerce_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews",
+								"commerce",
+								"{{commerce_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get reviews de un commerce test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Reviews IDs are in descending consecutive order\", function () {\r",
+									"    const ids = body.map(item => item.id);\r",
+									"    for (let i = 0; i < ids.length - 1; i++) {\r",
+									"        pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"    }\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_owner}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/reviews/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"reviews",
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all owner commerces varios commerce",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_owner}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/commerce/user/{{userId_owner}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"user",
+								"{{userId_owner}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all owner commerces test",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/commerce/user/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"user",
+								"{{userTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get commerce info Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comprobar que los campos del commerce se guardaron correctamente\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.uuid).to.eql(pm.environment.get(\"commerceTEST_Uuid\"));\r",
+									"    pm.expect(response.id).to.eql(parseInt(pm.environment.get(\"commerceTEST_Id\")));\r",
+									"    pm.expect(response.destination).to.eql(pm.environment.get(\"commerceTEST_Destination\"));\r",
+									"    pm.expect(response.idGoogle).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
+									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
+									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
+									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
+									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
+									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
+									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
+									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
+									"    pm.expect(response.name).to.eql(pm.environment.get(\"commerceTEST_Name\"));\r",
+									"    pm.expect(response.address).to.eql(pm.environment.get(\"commerceTEST_Address\"));\r",
+									"    pm.expect(response.city).to.eql(pm.environment.get(\"commerceTEST_City\"));\r",
+									"    pm.expect(response.country).to.eql(pm.environment.get(\"commerceTEST_Country\"));\r",
+									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"null\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
+									"    pm.expect(response.totalReviews).to.eql(parseInt(pm.environment.get(\"commerceTEST_TotalReviews\")));\r",
+									"    pm.expect(response.rating).to.eql(parseFloat(pm.environment.get(\"commerceTEST_Rating\")));\r",
+									"    pm.expect(response.statusId).to.eql(pm.environment.get(\"commerceTEST_Status\"));\r",
+									"    pm.expect(response.userUuid).to.eql(pm.environment.get(\"commerceTEST_UserUuid\"));\r",
+									"    pm.expect(response.categoryId).to.eql(pm.environment.get(\"commerceTEST_CategoryId\"));\r",
+									"    pm.expect(response.productPackUuid).to.eql(pm.environment.get(\"commerceTEST_ProductPackUuid\"));\r",
+									"    pm.expect(response.showWebsite).to.eql(pm.environment.get(\"commerceTEST_ShowWebsite\") === \"true\");\r",
+									"    pm.expect(response.showIg).to.eql(pm.environment.get(\"commerceTEST_ShowIg\") === \"true\");\r",
+									"    pm.expect(response.showTwitter).to.eql(pm.environment.get(\"commerceTEST_ShowTwitter\") === \"true\");\r",
+									"    pm.expect(response.showFacebook).to.eql(pm.environment.get(\"commerceTEST_ShowFacebook\") === \"true\");\r",
+									"    pm.expect(response.showAddress).to.eql(pm.environment.get(\"commerceTEST_ShowAddress\") === \"true\");\r",
+									"    pm.expect(response.showLogo).to.eql(pm.environment.get(\"commerceTEST_ShowLogo\") === \"true\");\r",
+									"    pm.expect(response.activeSubscription).to.eql(pm.environment.get(\"commerceTEST_ActiveSubscription\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all commerce",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/commerce",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all productPacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productPacks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all employees",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/employee",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get data of employee Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_owner}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/employee/commerce/{{commerce_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee",
+								"commerce",
+								"{{commerce_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all product categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productCategory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Modificar datos",
+			"item": [
+				{
+					"name": "update user password Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.environment.set(\"userTest_Password\", 'xtap1234')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"password\": \"{{userTest_Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/update-password",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"update-password"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login owner test password modificada",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(201)\r",
+									"});\r",
+									"pm.test(\"El usuario tiene un token para el resto de peticiones\", () =>{\r",
+									"    pm.expect(body.access_token).to.not.eql(null);\r",
+									"})\r",
+									"\r",
+									"pm.environment.set(\"auth_token_ownerTEST\", body.access_token)\r",
+									"pm.environment.set(\"userTest_uuid\", body.id)\r",
+									"pm.environment.set(\"role_ownerTEST\", body.role)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{userTest_Email}}\",\r\n  \"password\": \"{{userTest_Password}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/auth/login",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update commerce info Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Se actualiza el commerce correctamente\", () =>{\r",
+									"    pm.response.to.have.status(202)\r",
+									"});\r",
+									"\r",
+									"pm.environment.set(\"commerceTEST_Id\", body.data.id);\r",
+									"pm.environment.set(\"commerceTEST_Uuid\", body.data.uuid);\r",
+									"pm.environment.set(\"commerceTEST_Status\", body.data.statusId);\r",
+									"pm.environment.set(\"commerceTEST_ShowFacebook\", body.data.showFacebook);\r",
+									"pm.environment.set(\"commerceTEST_ShowAddress\", body.data.showAddress);\r",
+									"pm.environment.set(\"commerceTEST_ActiveSubscription\", body.data.activeSubscription);\r",
+									"pm.environment.set(\"commerceTEST_IdGoogle\", body.data.idGoogle)\r",
+									"pm.environment.set(\"commerceTEST_Destination\", body.data.destination);\r",
+									"pm.environment.set(\"commerceTEST_UrlTripAdvisor\", body.data.urlTripAdvisor);\r",
+									"pm.environment.set(\"commerceTEST_UrlTrivago\", body.data.urlTrivago);\r",
+									"pm.environment.set(\"commerceTEST_UrlBooking\", body.data.urlBooking);\r",
+									"pm.environment.set(\"commerceTEST_UrlFacebook\", body.data.urlFacebook);\r",
+									"pm.environment.set(\"commerceTEST_UrlWebsite\", body.data.urlWebsite);\r",
+									"pm.environment.set(\"commerceTEST_UrlIg\", body.data.urlIg);\r",
+									"pm.environment.set(\"commerceTEST_UrlTwitter\", body.data.urlTwitter);\r",
+									"pm.environment.set(\"commerceTEST_Name\", body.data.name);\r",
+									"pm.environment.set(\"commerceTEST_Address\", body.data.address);\r",
+									"pm.environment.set(\"commerceTEST_City\", body.data.city);\r",
+									"pm.environment.set(\"commerceTEST_Country\", body.data.country);\r",
+									"pm.environment.set(\"commerceTEST_LogoUrl\", body.data.logoUrl);\r",
+									"pm.environment.set(\"commerceTEST_ProductPackUuid\", body.data.productPackUuid);\r",
+									"pm.environment.set(\"commerceTEST_CategoryId\", body.data.categoryId);\r",
+									"pm.environment.set(\"commerceTEST_UserUuid\", body.data.userUuid);\r",
+									"pm.environment.set(\"commerceTEST_ShowWebsite\", body.data.showWebsite);\r",
+									"pm.environment.set(\"commerceTEST_ShowIg\", body.data.showIg);\r",
+									"pm.environment.set(\"commerceTEST_ShowTwitter\", body.data.showTwitter);\r",
+									"pm.environment.set(\"commerceTEST_ShowLogo\", body.data.showLogo);\r",
+									"pm.environment.set(\"commerceTEST_Rating\", body.data.rating);\r",
+									"pm.environment.set(\"commerceTEST_TotalReviews\", body.data.totalReviews);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"destination\": \"google\",\r\n    \"idGoogle\": \"ChIJmS2EJsMcQg0RG-ZuumVAtOg\",\r\n    \"urlTripAdvisor\": \"test\",\r\n    \"urlTrivago\": \"test\",\r\n    \"urlBooking\": \"test\",\r\n    \"urlFacebook\": \"test\",\r\n    \"urlWebsite\": \"test\",\r\n    \"urlIg\": \"test\",\r\n    \"urlTwitter\": \"test\",\r\n    \"name\": \"test test test\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Seseña\",\r\n    \"country\": \"España\",\r\n    \"categoryId\": 1,\r\n    \"logoUrl\": \"https://x-tap.club/\",\r\n    \"statusId\": 11,\r\n    \"showWebsite\": true,\r\n    \"showIg\": true,\r\n    \"showTwitter\": true,\r\n    \"showFacebook\": true,\r\n    \"showAddress\": true,\r\n    \"showLogo\": true,\r\n    \"activeSubscription\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "assgin-role",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"role\": \"manager\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/{{lastUserCreated_testReview}}/assign-role",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{lastUserCreated_testReview}}",
+								"assign-role"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update user data",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomFirstName = pm.variables.replaceIn(\"userTEST{{$randomFirstName}}\");\r",
+									"pm.environment.set(\"userTest_FirstName\", randomFirstName);\r",
+									"\r",
+									"const randomLastName = pm.variables.replaceIn(\"userTEST{{$randomLastName}}\");\r",
+									"pm.environment.set(\"userTest_LastName\", randomLastName);\r",
+									"\r",
+									"function getRandomPhoneNumber() {\r",
+									"    const prefixArray = ['600', '601', '602', '603', '604', '605', '606', '607', '608', '609', '610', '611', '612', '613', '614', '615', '616', '617', '618', '619', '620', '621', '622', '623', '624', '625', '626', '627', '628', '629', '630', '631', '632', '633', '634', '635', '636', '637', '638', '639', '640', '641', '642', '643', '644', '645', '646', '647', '648', '649', '650'];\r",
+									"\r",
+									"    const randomPrefix = prefixArray[Math.floor(Math.random() * prefixArray.length)];\r",
+									"    const randomNumber = Math.floor(100000 + Math.random() * 900000);\r",
+									"\r",
+									"    return `+34 ${randomPrefix} ${randomNumber}`;\r",
+									"}\r",
+									"\r",
+									"pm.environment.set('userTest_Phone', getRandomPhoneNumber());\r",
+									"\r",
+									"\r",
+									"const randomEmail = pm.variables.replaceIn(\"userTEST{{$randomEmail}}\");\r",
+									"pm.environment.set(\"userTest_Email\", randomEmail);\r",
+									"\r",
+									"const randomPassword = pm.variables.replaceIn(\"{{$randomPassword}}\");\r",
+									"pm.environment.set(\"userTest_Password\", randomPassword);\r",
+									"\r",
+									"const addressTEST = \"C. Gloria Fuertes, 28, 45223 Seseña, Toledo, Spain\";\r",
+									"pm.environment.set('userTest_Address', addressTEST)\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"El usuario se logea correctamente\", () =>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"userTest_Email\", body.email)\r",
+									"pm.environment.set(\"userTest_Phone\", body.phone)\r",
+									"pm.environment.set(\"userTest_FirstName\", body.firstName)\r",
+									"pm.environment.set(\"userTest_LastName\", body.lastName)\r",
+									"pm.environment.set(\"userTest_Address\", body.address)\r",
+									"pm.environment.set(\"userTest_City\", body.city)\r",
+									"pm.environment.set(\"userTest_Country\", body.country)\r",
+									"pm.environment.set(\"userTest_PostalCode\", body.postalCode)\r",
+									"pm.environment.set(\"userTest_WebsiteUrl\", body.websiteUrl)\r",
+									"pm.environment.set(\"userTest_IgUrl\", body.igUrl)\r",
+									"pm.environment.set(\"userTest_FacebookUrll\", body.facebookUrl)\r",
+									"pm.environment.set(\"userTest_TwitterUrll\", body.twitterUrl)\r",
+									"pm.environment.set(\"userTest_LogoUrll\", body.logoUrl)\r",
+									"pm.environment.set(\"userTest_Company\", body.company)\r",
+									"pm.environment.set(\"userTest_Role\", body.role)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"firstName\": \"{{userTest_FirstName}}\",\r\n  \"lastName\": \"{{userTest_LastName}}\",\r\n  \"email\": \"{{userTest_Email}}\",\r\n  \"phone\": \"{{userTest_Phone}}\",\r\n  \"statusId\": 1,\r\n  \"address\": \"C. Gloria Fuertes, 28, 45223 Seseña, Toledo, Spain\",\r\n  \"city\": \"Toledo1\",\r\n  \"country\": \"Spain1\",\r\n  \"postalCode\": \"12125\",\r\n  \"websiteUrl\": \"test\",\r\n  \"igUrl\": \"test\",\r\n  \"facebookUrl\": \"test\",\r\n  \"twitterUrl\": \"test\",\r\n  \"logoUrl\": \"test\",\r\n  \"company\": \"test test 12\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/users/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update status or employee of a card Copy",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "[{\r\n  \"statusId\": 5\r\n}]",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/products/{{productTest_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"products",
+								"{{productTest_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update category",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"categoryTEST_name\", 'pubTEST')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{categoryTEST_name}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/categories/{{categoryTEST_Id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"{{categoryTEST_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update productPacks",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"productPackTest_Name\", 'test modificado')\r",
+									"pm.environment.set(\"productPackTest_Value\", 9.19)\r",
+									"pm.environment.set(\"productPackTest_statusId\", 22)\r",
+									"pm.environment.set(\"productPackTest_FirstProduct_Quantity\", 3)\r",
+									"pm.environment.set(\"productPackTest_FirstProduct_productCategoryId\", 1)\r",
+									"pm.environment.set(\"productPackTest_SecondProduct_Quantity\", 7)\r",
+									"\r",
+									"const productCategoryId =  pm.environment.get(\"productCategoryTEST_Id\");\r",
+									"pm.environment.set(\"productPackTest_SecondProduct_productCategoryId\", productCategoryId)\r",
+									"\r",
+									"//console.log(productCategoryId)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"El productPack responde con un 200\", () =>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"})\r",
+									"\r",
+									"\r",
+									"pm.test(\"El productPack se actualiz correctamente\", function () {\r",
+									"    pm.expect(pm.response.json()).to.deep.include(1);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{productPackTest_Name}}\",\r\n  \"description\": [\r\n    {\r\n        \"quantity\": \"{{productPackTest_FirstProduct_Quantity}}\",\r\n        \"productCategoryId\": {{productPackTest_FirstProduct_productCategoryId}}\r\n    },\r\n    {\r\n        \"quantity\": \"{{productPackTest_SecondProduct_Quantity}}\",\r\n        \"productCategoryId\": {{productPackTest_SecondProduct_productCategoryId}}\r\n    }\r\n  ],\r\n  \"value\": {{productPackTest_Value}},\r\n  \"statusId\": {{productPackTest_statusId}}\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/productPacks/{{productPackTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks",
+								"{{productPackTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update employee",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"El employee se ha actualizado correctamente\", () =>{\r",
+									"    pm.response.to.have.status(200)\r",
+									"})"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"const randomEmail = pm.variables.replaceIn(\"emailEmployeeModificado{{$randomEmail}}\");\r",
+									"pm.environment.set(\"employeeTest_Email\", randomEmail)\r",
+									"\r",
+									"function getRandomPhoneNumber() {\r",
+									"    const prefixArray = ['600', '601', '602', '603', '604', '605', '606', '607', '608', '609', '610', '611', '612', '613', '614', '615', '616', '617', '618', '619', '620', '621', '622', '623', '624', '625', '626', '627', '628', '629', '630', '631', '632', '633', '634', '635', '636', '637', '638', '639', '640', '641', '642', '643', '644', '645', '646', '647', '648', '649', '650'];\r",
+									"\r",
+									"    const randomPrefix = prefixArray[Math.floor(Math.random() * prefixArray.length)];\r",
+									"    const randomNumber = Math.floor(100000 + Math.random() * 900000);\r",
+									"\r",
+									"    return `+34 ${randomPrefix} ${randomNumber}`;\r",
+									"}\r",
+									"\r",
+									"\r",
+									"pm.environment.set(\"employeeTest_Phone\", getRandomPhoneNumber())\r",
+									"pm.environment.set(\"employeeTest_Name\", 'testNameEmployeeModificado')\r",
+									"pm.environment.set(\"employeeTest_Position\", 'testModificado')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"email\": \"{{employeeTest_Email}}\",\r\n  \"phone\": \"{{employeeTest_Phone}}\",\r\n  \"name\": \"{{employeeTest_Name}}\",\r\n  \"position\": \"{{employeeTest_Position}}\",\r\n  \"commerceUuid\": \"{{employeeTest_commerceUuid}}\",\r\n  \"productUuid\":\"{{productTest_Uuid}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/employee/{{employeeTest_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee",
+								"{{employeeTest_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update product Category Copy",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.environment.set(\"productCategoryTEST_Name\", 'standTEST')"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"{{productCategoryTEST_Name}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/productCategory/{{productCategoryTEST_Id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory",
+								"{{productCategoryTEST_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Traer datos modificados",
+			"item": [
+				{
+					"name": "get commerce info",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Comprobar que los campos del commerce se guardaron correctamente\", function() {\r",
+									"    const response = pm.response.json();\r",
+									"    pm.expect(response.uuid).to.eql(pm.environment.get(\"commerceTEST_Uuid\"));\r",
+									"    pm.expect(response.id).to.eql(parseInt(pm.environment.get(\"commerceTEST_Id\")));\r",
+									"    pm.expect(response.destination).to.eql(pm.environment.get(\"commerceTEST_Destination\"));\r",
+									"    pm.expect(response.idGoogle).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
+									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
+									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
+									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
+									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
+									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
+									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
+									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
+									"    pm.expect(response.name).to.eql(pm.environment.get(\"commerceTEST_Name\"));\r",
+									"    pm.expect(response.address).to.eql(pm.environment.get(\"commerceTEST_Address\"));\r",
+									"    pm.expect(response.city).to.eql(pm.environment.get(\"commerceTEST_City\"));\r",
+									"    pm.expect(response.country).to.eql(pm.environment.get(\"commerceTEST_Country\"));\r",
+									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"null\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
+									"    pm.expect(response.totalReviews).to.eql(parseInt(pm.environment.get(\"commerceTEST_TotalReviews\")));\r",
+									"    pm.expect(response.rating).to.eql(parseFloat(pm.environment.get(\"commerceTEST_Rating\")));\r",
+									"    pm.expect(response.statusId).to.eql(pm.environment.get(\"commerceTEST_Status\"));\r",
+									"    pm.expect(response.userUuid).to.eql(pm.environment.get(\"commerceTEST_UserUuid\"));\r",
+									"    pm.expect(response.categoryId).to.eql(pm.environment.get(\"commerceTEST_CategoryId\"));\r",
+									"    pm.expect(response.productPackUuid).to.eql(pm.environment.get(\"commerceTEST_ProductPackUuid\"));\r",
+									"    pm.expect(response.showWebsite).to.eql(pm.environment.get(\"commerceTEST_ShowWebsite\"));\r",
+									"    pm.expect(response.showIg).to.eql(pm.environment.get(\"commerceTEST_ShowIg\"));\r",
+									"    pm.expect(response.showTwitter).to.eql(pm.environment.get(\"commerceTEST_ShowTwitter\"));\r",
+									"    pm.expect(response.showFacebook).to.eql(pm.environment.get(\"commerceTEST_ShowFacebook\"));\r",
+									"    pm.expect(response.showAddress).to.eql(pm.environment.get(\"commerceTEST_ShowAddress\"));\r",
+									"    pm.expect(response.showLogo).to.eql(pm.environment.get(\"commerceTEST_ShowLogo\"));\r",
+									"    pm.expect(response.activeSubscription).to.eql(pm.environment.get(\"commerceTEST_ActiveSubscription\"));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El last user review tiene el role modificado\", function () {\r",
+									"\r",
+									"    pm.expect(body[0].role).to.be.eq('manager')\r",
+									"\r",
+									"});\r",
+									"\r",
+									"//console.log(body[0].uuid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get user data",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El mismo uuid que en la variable\", function () {\r",
+									"    pm.expect(body.uuid).to.equal(pm.environment.get(\"userTest_uuid\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"El user tiene role owner\", function () {\r",
+									"    pm.expect(body.role).to.equal(pm.environment.get(\"userTest_Role\"));\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_ownerTEST}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get data of employee Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_owner}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/employee/commerce/{{commerce_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee",
+								"commerce",
+								"{{commerce_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"El campo name de categories se modifico correctamente\", function () {\r",
+									"    var categories = pm.response.json();\r",
+									"    var lastCategoryName = categories[categories.length - 1].name;\r",
+									"    pm.expect(lastCategoryName).to.be.eq(pm.environment.get('categoryTEST_name'));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all productPacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar que el productPack test se modifico correctamente\", function () {\r",
+									"    pm.response.json().forEach(function(productPack) {\r",
+									"        var idNecesario = pm.environment.get('productPackTest_ID')\r",
+									"        if (productPack.id === idNecesario) {\r",
+									"            pm.expect(productPack.uuid).to.be.eq(pm.environment.get('productPackTest_uuid'));\r",
+									"            pm.expect(productPack.name).to.be.eq(pm.environment.get('productPackTest_Name'));\r",
+									"            pm.expect(productPack.description[0].quantity).to.be.eql(pm.environment.get('productPackTest_FirstProduct_Quantity').toString());\r",
+									"            pm.expect(productPack.description[0].productCategoryId).to.be.eq(pm.environment.get('productPackTest_FirstProduct_productCategoryId'));\r",
+									"            pm.expect(productPack.description[1].quantity).to.be.eq(pm.environment.get('productPackTest_SecondProduct_Quantity').toString());\r",
+									"            pm.expect(productPack.description[1].productCategoryId).to.be.eq(pm.environment.get('productPackTest_SecondProduct_productCategoryId'));            \r",
+									"            pm.expect(productPack.value).to.be.eq(pm.environment.get('productPackTest_Value'));\r",
+									"            pm.expect(productPack.statusId).to.be.eq(pm.environment.get('productPackTest_statusId'));\r",
+									"        }\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productPacks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all employees Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validar que el productPack test se modifico correctamente\", function () {\r",
+									"    pm.response.json().forEach(function(employee) {\r",
+									"        var idNecesario = pm.environment.get('employeeTest_ID')\r",
+									"        if (employee.id === idNecesario) {\r",
+									"            pm.expect(employee.uuid).to.be.eq(pm.environment.get('employeeTest_Uuid'));\r",
+									"            pm.expect(employee.name).to.be.eq(pm.environment.get('employeeTest_Name'));\r",
+									"            pm.expect(employee.email).to.be.eql(pm.environment.get('employeeTest_Email'));\r",
+									"            pm.expect(employee.phone).to.be.eq(pm.environment.get('employeeTest_Phone'));\r",
+									"            pm.expect(employee.position).to.be.eq(pm.environment.get('employeeTest_Position'));\r",
+									"            pm.expect(employee.commerceUuid).to.be.eq(pm.environment.get('employeeTest_commerceUuid'));\r",
+									"        }\r",
+									"    });\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/employee",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"employee"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all product categories Copy 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"El campo name de productCategories se modifico correctamente\", function () {\r",
+									"    var productCategories = pm.response.json();\r",
+									"    var lastProductCategoryName = productCategories[productCategories.length - 1].name;\r",
+									"    pm.expect(lastProductCategoryName).to.be.eq(pm.environment.get('productCategoryTEST_Name'));\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productCategory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Eliminar datos",
+			"item": [
+				{
+					"name": "delete commerce",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/commerce/{{commerceTEST_Uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce",
+								"{{commerceTEST_Uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user owner",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{userTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{userTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user client",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{lastUserCreated_testReview}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{lastUserCreated_testReview}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users for manager",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"pm.environment.set(\"mangerTest_Id\", body[0].uuid)\r",
+									"\r",
+									"//console.log(body[0].uuid)"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete user manager",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users/{{mangerTest_Id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users",
+								"{{mangerTest_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "dalete category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories/{{categoryTEST_Id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories",
+								"{{categoryTEST_Id}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete productPacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"name\": \"string\",\r\n  \"description\": \"string\",\r\n  \"value\": 0,\r\n  \"statusId\": 0\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{url}}/productPacks/{{productPackTest_uuid}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks",
+								"{{productPackTest_uuid}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete product category",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productCategory/{{productCategoryTEST_Id}}",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory",
+								"{{productCategoryTEST_Id}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Verificar datos eliminados",
+			"item": [
+				{
+					"name": "get all commerce",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check if the response is empty\", function() {\r",
+									"    const body = pm.response.text();\r",
+									"    if (!body) {\r",
+									"        pm.expect.fail(\"Response is empty\");\r",
+									"    } else {\r",
+									"        const body = pm.response.json();\r",
+									"        pm.test(\"First commerce ID is greater than the second user ID\", function () {\r",
+									"            pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"        });\r",
+									"        pm.test(\"Commerce IDs are in descending consecutive order\", function () {\r",
+									"            const ids = body.map(item => item.id);\r",
+									"            for (let i = 0; i < ids.length - 1; i++) {\r",
+									"                pm.expect(ids[i]).to.be.greaterThan(ids[i + 1]);\r",
+									"            }\r",
+									"        });\r",
+									"    }\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar si existe un id igual a commerceTEST_Id\", function () {\r",
+									"    var commerceTestID = pm.environment.get('commerceTEST_Id');\r",
+									"    var jsonData = pm.response.json();\r",
+									"    function buscarID(obj) {\r",
+									"        if (typeof obj !== 'object' || obj === null) {\r",
+									"            return false;\r",
+									"        }\r",
+									"        for (var key in obj) {\r",
+									"            if (key === 'id' && obj[key] == commerceTestID) {\r",
+									"                console.log(\"ID encontrado:\", obj[key]);\r",
+									"                return true;\r",
+									"            }\r",
+									"            if (typeof obj[key] === 'object' && buscarID(obj[key])) {\r",
+									"                return true;\r",
+									"            }\r",
+									"        }\r",
+									"        return false;\r",
+									"    }\r",
+									"    var idEncontrado = buscarID(jsonData);   \r",
+									"    pm.expect(idEncontrado, \"Se encontró el ID \" + commerceTestID + \" en la respuesta\").to.be.false;\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/commerce",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"commerce"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all users",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const body = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"First user ID is greater than the second user ID\", function () {\r",
+									"    pm.expect(body[0].id).to.be.greaterThan(body[1].id);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar si existe un id igual a userTest_ID\", function () {\r",
+									"    var userTestID = pm.environment.get('userTest_ID');\r",
+									"    var jsonData = pm.response.json();\r",
+									"    function buscarID(obj) {\r",
+									"        if (typeof obj !== 'object' || obj === null) {\r",
+									"            return false;\r",
+									"        }\r",
+									"        for (var key in obj) {\r",
+									"            if (key === 'id' && obj[key] == userTestID) {\r",
+									"                console.log(\"ID encontrado:\", obj[key]);\r",
+									"                return true;\r",
+									"            }\r",
+									"            if (typeof obj[key] === 'object' && buscarID(obj[key])) {\r",
+									"                return true;\r",
+									"            }\r",
+									"        }\r",
+									"        return false;\r",
+									"    }\r",
+									"    var idEncontrado = buscarID(jsonData);   \r",
+									"    pm.expect(idEncontrado, \"Se encontró el ID \" + userTestID + \" en la respuesta\").to.be.false;\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/users",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verificar si existe un id igual a categoryTEST_Id\", function () {\r",
+									"    var categoryTestID = pm.environment.get('categoryTEST_Id');\r",
+									"    var jsonData = pm.response.json();\r",
+									"    function buscarID(obj) {\r",
+									"        if (typeof obj !== 'object' || obj === null) {\r",
+									"            return false;\r",
+									"        }\r",
+									"        for (var key in obj) {\r",
+									"            if (key === 'id' && obj[key] == categoryTestID) {\r",
+									"                console.log(\"ID encontrado:\", obj[key]);\r",
+									"                return true;\r",
+									"            }\r",
+									"            if (typeof obj[key] === 'object' && buscarID(obj[key])) {\r",
+									"                return true;\r",
+									"            }\r",
+									"        }\r",
+									"        return false;\r",
+									"    }\r",
+									"    var idEncontrado = buscarID(jsonData);   \r",
+									"    pm.expect(idEncontrado, \"Se encontró el ID \" + categoryTestID + \" en la respuesta\").to.be.false;\r",
+									"\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/categories",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"categories"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all productPacks",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verificar si existe un id igual a productPackTest_ID\", function () {\r",
+									"    var productPackTestID = pm.environment.get('productPackTest_ID');\r",
+									"    var jsonData = pm.response.json();\r",
+									"    function buscarID(obj) {\r",
+									"        if (typeof obj !== 'object' || obj === null) {\r",
+									"            return false;\r",
+									"        }\r",
+									"        for (var key in obj) {\r",
+									"            if (key === 'id' && obj[key] == productPackTestID) {\r",
+									"                console.log(\"ID encontrado:\", obj[key]);\r",
+									"                return true;\r",
+									"            }\r",
+									"            if (typeof obj[key] === 'object' && buscarID(obj[key])) {\r",
+									"                return true;\r",
+									"            }\r",
+									"        }\r",
+									"        return false;\r",
+									"    }\r",
+									"    var idEncontrado = buscarID(jsonData);   \r",
+									"    pm.expect(idEncontrado, \"Se encontró el ID \" + productPackTestID + \" en la respuesta\").to.be.false;\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productPacks",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productPacks"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get all product categories",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 500ms\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(500);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verificar si existe un id igual a productCategoryTEST_Id\", function () {\r",
+									"    var productCategoryTestID = pm.environment.get('productCategoryTEST_Id');\r",
+									"    var jsonData = pm.response.json();\r",
+									"    function buscarID(obj) {\r",
+									"        if (typeof obj !== 'object' || obj === null) {\r",
+									"            return false;\r",
+									"        }\r",
+									"        for (var key in obj) {\r",
+									"            if (key === 'id' && obj[key] == productCategoryTestID) {\r",
+									"                console.log(\"ID encontrado:\", obj[key]);\r",
+									"                return true;\r",
+									"            }\r",
+									"            if (typeof obj[key] === 'object' && buscarID(obj[key])) {\r",
+									"                return true;\r",
+									"            }\r",
+									"        }\r",
+									"        return false;\r",
+									"    }\r",
+									"    var idEncontrado = buscarID(jsonData);   \r",
+									"    pm.expect(idEncontrado, \"Se encontró el ID \" + productCategoryTestID + \" en la respuesta\").to.be.false;\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{auth_token_admin}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}/productCategory",
+							"host": [
+								"{{url}}"
+							],
+							"path": [
+								"productCategory"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "key",
+				"value": "api-key",
+				"type": "string"
+			},
+			{
+				"key": "value",
+				"value": "{{apiKey}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "https://template.postman-echo.com",
+			"type": "string"
+		},
+		{
+			"key": "apiKey",
+			"value": "OMpqVWAH.UC80wyXTtPwhDgAUdCTx6"
+		}
+	]
+}
