@@ -1,7 +1,7 @@
 {
 	"info": {
 		"_postman_id": "c66f6838-4d86-4564-8895-23844023a2c2",
-		"name": "Pruebas Automatizadas",
+		"name": "Pruebas-Automatizadas",
 		"description": "> This collection features end-to-end tests that ensure the Intergalactic Bank API components function in an expected sequence. Check out the [Functional testing collection](https://www.postman.com/templates/f26ad070-d626-4d75-b151-7cbf1a48ed11/Functional-testing) and [Integration testing collection](https://www.postman.com/templates/6f788c17-067a-4074-a528-d07df1df9529/Integration-testing-%23example) for other test cases for this API. \n  \n\n## **🪐 Get started**\n\nThe fictional Intergalactic Bank Services team is responsible for testing the end-to-end workflows in this collection. You can use this collection to validate specific workflows for your team or figure out ways to increase your test coverage and make your applications more resilient.\n\nTo test the Intergalactic Bank API, you can:\n\n1. **Review tests and scripts:** Check out the [tests](https://learning.postman.com/docs/writing-scripts/test-scripts/) in the Scripts tab of a collection, folder, or request. You’ll also find additional steps in the Pre-request Script, such as for passing data between requests or building up POST request payloads.\n    \n2. **Run tests:** To run the collection, select Run collection from the collection menu. If you are interested in testing one of the use cases, select Run folder from the use case folder menu. Keep in mind that many of these tests contain logic that passes information between requests, and they are meant to be run in order from top to bottom. If you send the requests manually or out of order, your results may vary.\n    \n3. **Review test results:** Many of the test cases contain error messages to help debug service errors. If you’re using this collection as a pre-merge check, ensure that all tests are passing before submitting (and no, deleting the failing test cases isn’t an option 😉).\n    \n\nCheck out the additional sections below or select View complete documentation. For context-sensitive help with a folder or request, look for the documentation icon.\n\n## 🧑‍💻How your team can use this collection\n\n- **Add a mock server to speed up development:** Adding functionality to this service? Since this collection has example responses, you can add a mock server that will return the expected results. Start writing tests against the mock, and once your additions are live, you can swap out the URLs and have a live test suite.\n    \n- **Integrate tests with your CI/CD pipeline:** This comprehensive test suite is a great addition to your existing CI/CD pipeline. Generate the Postman CLI command from the Collection Runner and add this step to your existing checks each time you make a commit affecting this service.\n    \n- **Add a monitor:** If your team is contributing to or relying on this service, it’s a good idea to keep tabs on the status. Adding a monitor to this collection can give you confidence that the service is up and running and alert you to any breaking changes that may have occurred.\n    \n\n## 🔍 What we’re testing\n\n- A very common workflow is the transfer of funds between accounts. We have two scenarios: one which creates all resources and successfully transfers funds, and one which tries the transfer with insufficient funds.\n    \n- During these workflows, we are testing for data correctness, data types, and that data is successfully passed through the system during creation and retrieval.\n    \n\n## 🔒A note on authorization\n\nThis API uses an API key-based authorization. In this collection, we set the authorization at the collection level and generate a new API Key for each test run.\n\n## 👀 View and share run results\n\nInterested in seeing previous run results? We’re happy to share, and have a few ways for you to stay in the loop:\n\n- **Runs tab:** View past collection runs in the `Runs` tab of this collection. Here, you can see the results of past runs, including who ran them and whether it was via the Collection Runner or the CLI. You can also share individual run reports from this page.\n    \n- **Monitors:** If you have a monitor set up for this collection, you can see historical run information when you select the Monitors tab in the left sidebar. You can also have the results sent to Slack or other services when you set up a corresponding integration.\n    \n\n### 🤝Increase test coverage\n\nThe Intergalactic Bank Services team wants your team to have everything they need to successfully test our services with their applications. Is your team utilizing this API in a use case not represented here? Reach out to us on our internal Slack by tagging `@bank-services`. Or add an [inline comment](https://learning.postman.com/docs/collaborating-in-postman/working-with-your-team/discussing-your-work/) to this collection with your test case suggestions.",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "29511381",
@@ -9,10 +9,10 @@
 	},
 	"item": [
 		{
-			"name": "1.Datos necesarios para las pruebas",
+			"name": "1.- Datos necesarios para las pruebas",
 			"item": [
 				{
-					"name": "1.1-login admin",
+					"name": "1.1.- login admin",
 					"event": [
 						{
 							"listen": "test",
@@ -61,7 +61,7 @@
 					"response": []
 				},
 				{
-					"name": "login owner",
+					"name": "1.1.- login owner",
 					"event": [
 						{
 							"listen": "test",
@@ -112,10 +112,10 @@
 			]
 		},
 		{
-			"name": "Crear datos",
+			"name": "2.- Crear datos",
 			"item": [
 				{
-					"name": "Registro user",
+					"name": "2.1.- Registro user",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -207,7 +207,7 @@
 					"response": []
 				},
 				{
-					"name": "login owner test",
+					"name": "2.2.- login owner test",
 					"event": [
 						{
 							"listen": "test",
@@ -257,7 +257,7 @@
 					"response": []
 				},
 				{
-					"name": "Get user data",
+					"name": "2.3.- Get user data",
 					"event": [
 						{
 							"listen": "test",
@@ -332,7 +332,7 @@
 					"response": []
 				},
 				{
-					"name": "create productCategory",
+					"name": "2.4.- create productCategory",
 					"event": [
 						{
 							"listen": "test",
@@ -388,7 +388,7 @@
 					"response": []
 				},
 				{
-					"name": "create category",
+					"name": "2.5- create category",
 					"event": [
 						{
 							"listen": "test",
@@ -443,7 +443,7 @@
 					"response": []
 				},
 				{
-					"name": "create productPacks",
+					"name": "2.6.- create productPacks",
 					"event": [
 						{
 							"listen": "test",
@@ -505,7 +505,7 @@
 					"response": []
 				},
 				{
-					"name": "create commerce",
+					"name": "2.7.- create commerce",
 					"event": [
 						{
 							"listen": "test",
@@ -523,8 +523,7 @@
 									"pm.environment.set(\"commerceTEST_ShowFacebook\", body.showFacebook)\r",
 									"pm.environment.set(\"commerceTEST_ShowAddress\", body.showAddress)\r",
 									"pm.environment.set(\"commerceTEST_ActiveSubscription\", body.activeSubscription)\r",
-									"pm.environment.set(\"commerceTEST_IdGoogle\", body.idGoogle)\r",
-									"pm.environment.set(\"commerceTEST_Destination\", body.destination)\r",
+									"pm.environment.set(\"commerceTEST_IdGoogle\", body.placeId)\r",
 									"pm.environment.set(\"commerceTEST_UrlTripAdvisor\", body.urlTripAdvisor)\r",
 									"pm.environment.set(\"commerceTEST_UrlTrivago\", body.urlTrivago)\r",
 									"pm.environment.set(\"commerceTEST_UrlBooking\", body.urlBooking)\r",
@@ -568,7 +567,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"destination\": \"google\",\r\n    \"idGoogle\": \"ChIJJ85yCpsFDg0RxikmjSahN5k\",\r\n    \"urlTripAdvisor\": null,\r\n    \"urlTrivago\": null,\r\n    \"urlBooking\": null,\r\n    \"urlFacebook\": null,\r\n    \"urlWebsite\": null,\r\n    \"urlIG\": null,\r\n    \"urlTwitter\": null,\r\n    \"name\": \"{{$randomCompanyName}}\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Toledo\",\r\n    \"country\": \"Spain\",\r\n    \"logo\": null,\r\n    \"productPackUuid\": \"{{productPackTest_uuid}}\",\r\n    \"userUuid\": \"{{userTest_uuid}}\",\r\n    \"showWebsite\": false,\r\n    \"showIg\": false,\r\n    \"showTwitter\": false,\r\n    \"showacebook\": false,\r\n    \"showAdress\": false,\r\n    \"showLogo\": false,\r\n    \"categoryId\": {{categoryTEST_Id}},\r\n    \"statusId\": 11,\r\n    \"activeSubscription\": true\r\n}",
+							"raw": "{\r\n    \"placeId\": \"ChIJJ85yCpsFDg0RxikmjSahN5k\",\r\n    \"urlTripAdvisor\": null,\r\n    \"urlTrivago\": null,\r\n    \"urlBooking\": null,\r\n    \"urlFacebook\": null,\r\n    \"urlWebsite\": null,\r\n    \"urlIG\": null,\r\n    \"urlTwitter\": null,\r\n    \"name\": \"{{$randomCompanyName}}\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Toledo\",\r\n    \"country\": \"Spain\",\r\n    \"logo\": null,\r\n    \"productPackUuid\": \"{{productPackTest_uuid}}\",\r\n    \"userUuid\": \"{{userTest_uuid}}\",\r\n    \"showWebsite\": false,\r\n    \"showIg\": false,\r\n    \"showTwitter\": false,\r\n    \"showacebook\": false,\r\n    \"showAdress\": false,\r\n    \"showLogo\": false,\r\n    \"categoryId\": {{categoryTEST_Id}},\r\n    \"statusId\": 11,\r\n    \"activeSubscription\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -588,7 +587,7 @@
 					"response": []
 				},
 				{
-					"name": "update commerce para review",
+					"name": "2.8.- update commerce para review",
 					"event": [
 						{
 							"listen": "test",
@@ -655,7 +654,7 @@
 					"response": []
 				},
 				{
-					"name": "bulk create products",
+					"name": "2.9.- bulk create products",
 					"event": [
 						{
 							"listen": "test",
@@ -720,7 +719,7 @@
 					"response": []
 				},
 				{
-					"name": "create employee",
+					"name": "2.10.- create employee",
 					"event": [
 						{
 							"listen": "test",
@@ -781,7 +780,7 @@
 					"response": []
 				},
 				{
-					"name": "get uploadURL",
+					"name": "2.11.- get uploadURL",
 					"event": [
 						{
 							"listen": "test",
@@ -846,7 +845,7 @@
 					"response": []
 				},
 				{
-					"name": "assign manager to commerce Copy",
+					"name": "2.12.- assign manager to commerce Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -915,7 +914,7 @@
 					"response": []
 				},
 				{
-					"name": "crear review",
+					"name": "2.13.- crear review",
 					"event": [
 						{
 							"listen": "test",
@@ -957,10 +956,10 @@
 			]
 		},
 		{
-			"name": "Traer datos",
+			"name": "3.- Traer datos",
 			"item": [
 				{
-					"name": "review de clients",
+					"name": "3.1.- review de clients",
 					"event": [
 						{
 							"listen": "test",
@@ -1051,7 +1050,7 @@
 					"response": []
 				},
 				{
-					"name": "Get user data",
+					"name": "3.2.- Get user data",
 					"event": [
 						{
 							"listen": "test",
@@ -1107,7 +1106,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all users",
+					"name": "3.3.- Get all users",
 					"event": [
 						{
 							"listen": "test",
@@ -1168,7 +1167,7 @@
 					"response": []
 				},
 				{
-					"name": "get refviews",
+					"name": "3.4.- get refviews",
 					"event": [
 						{
 							"listen": "test",
@@ -1237,7 +1236,7 @@
 					"response": []
 				},
 				{
-					"name": "count commerce products",
+					"name": "3.5.- count commerce products",
 					"event": [
 						{
 							"listen": "test",
@@ -1292,7 +1291,7 @@
 					"response": []
 				},
 				{
-					"name": "list commerce products",
+					"name": "3.6.- list commerce products",
 					"event": [
 						{
 							"listen": "test",
@@ -1376,7 +1375,7 @@
 					"response": []
 				},
 				{
-					"name": "list all products",
+					"name": "3.7.- list all products",
 					"event": [
 						{
 							"listen": "test",
@@ -1445,7 +1444,7 @@
 					"response": []
 				},
 				{
-					"name": "get reviews de un commerce con varias reviews",
+					"name": "3.8.- get reviews de un commerce con varias reviews",
 					"event": [
 						{
 							"listen": "test",
@@ -1516,7 +1515,7 @@
 					"response": []
 				},
 				{
-					"name": "get reviews de un commerce test",
+					"name": "3.9.- get reviews de un commerce test",
 					"event": [
 						{
 							"listen": "test",
@@ -1584,7 +1583,7 @@
 					"response": []
 				},
 				{
-					"name": "get all owner commerces varios commerce",
+					"name": "3.10.- get all owner commerces varios commerce",
 					"event": [
 						{
 							"listen": "test",
@@ -1650,7 +1649,7 @@
 					"response": []
 				},
 				{
-					"name": "get all owner commerces test",
+					"name": "3.11.- get all owner commerces test",
 					"event": [
 						{
 							"listen": "test",
@@ -1700,7 +1699,7 @@
 					"response": []
 				},
 				{
-					"name": "get commerce info Copy",
+					"name": "3.12.- get commerce info Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -1718,20 +1717,19 @@
 									"    const response = pm.response.json();\r",
 									"    pm.expect(response.uuid).to.eql(pm.environment.get(\"commerceTEST_Uuid\"));\r",
 									"    pm.expect(response.id).to.eql(parseInt(pm.environment.get(\"commerceTEST_Id\")));\r",
-									"    pm.expect(response.destination).to.eql(pm.environment.get(\"commerceTEST_Destination\"));\r",
-									"    pm.expect(response.idGoogle).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
-									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
-									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
-									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
-									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
-									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
-									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
-									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
+									"    pm.expect(response.placeId).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
+									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
+									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
+									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
+									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
+									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
+									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
+									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
 									"    pm.expect(response.name).to.eql(pm.environment.get(\"commerceTEST_Name\"));\r",
 									"    pm.expect(response.address).to.eql(pm.environment.get(\"commerceTEST_Address\"));\r",
 									"    pm.expect(response.city).to.eql(pm.environment.get(\"commerceTEST_City\"));\r",
 									"    pm.expect(response.country).to.eql(pm.environment.get(\"commerceTEST_Country\"));\r",
-									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"null\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
+									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
 									"    pm.expect(response.totalReviews).to.eql(parseInt(pm.environment.get(\"commerceTEST_TotalReviews\")));\r",
 									"    pm.expect(response.rating).to.eql(parseFloat(pm.environment.get(\"commerceTEST_Rating\")));\r",
 									"    pm.expect(response.statusId).to.eql(pm.environment.get(\"commerceTEST_Status\"));\r",
@@ -1745,6 +1743,7 @@
 									"    pm.expect(response.showAddress).to.eql(pm.environment.get(\"commerceTEST_ShowAddress\") === \"true\");\r",
 									"    pm.expect(response.showLogo).to.eql(pm.environment.get(\"commerceTEST_ShowLogo\") === \"true\");\r",
 									"    pm.expect(response.activeSubscription).to.eql(pm.environment.get(\"commerceTEST_ActiveSubscription\"));\r",
+									"    pm.expect(response.managers[0]).to.not.empty;\r",
 									"});\r",
 									""
 								],
@@ -1792,7 +1791,7 @@
 					"response": []
 				},
 				{
-					"name": "get all commerce",
+					"name": "3.13.- get all commerce",
 					"event": [
 						{
 							"listen": "test",
@@ -1856,7 +1855,7 @@
 					"response": []
 				},
 				{
-					"name": "get all categories",
+					"name": "3.14.- get all categories",
 					"event": [
 						{
 							"listen": "test",
@@ -1903,7 +1902,7 @@
 					"response": []
 				},
 				{
-					"name": "get all productPacks",
+					"name": "3.15.- get all productPacks",
 					"event": [
 						{
 							"listen": "test",
@@ -1949,7 +1948,7 @@
 					"response": []
 				},
 				{
-					"name": "get all employees",
+					"name": "3.16.- get all employees",
 					"event": [
 						{
 							"listen": "test",
@@ -2013,7 +2012,7 @@
 					"response": []
 				},
 				{
-					"name": "get data of employee Copy",
+					"name": "3.17.- get data of employee Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -2061,7 +2060,7 @@
 					"response": []
 				},
 				{
-					"name": "get all product categories",
+					"name": "3.18.- get all product categories",
 					"event": [
 						{
 							"listen": "test",
@@ -2108,10 +2107,10 @@
 			]
 		},
 		{
-			"name": "Modificar datos",
+			"name": "4.- Modificar datos",
 			"item": [
 				{
-					"name": "update user password Copy",
+					"name": "4.1.- update user password Copy",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2160,7 +2159,7 @@
 					"response": []
 				},
 				{
-					"name": "login owner test password modificada",
+					"name": "4.2.- login owner test password modificada",
 					"event": [
 						{
 							"listen": "test",
@@ -2210,7 +2209,7 @@
 					"response": []
 				},
 				{
-					"name": "update commerce info Copy",
+					"name": "4.3.- update commerce info Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -2228,7 +2227,7 @@
 									"pm.environment.set(\"commerceTEST_ShowFacebook\", body.data.showFacebook);\r",
 									"pm.environment.set(\"commerceTEST_ShowAddress\", body.data.showAddress);\r",
 									"pm.environment.set(\"commerceTEST_ActiveSubscription\", body.data.activeSubscription);\r",
-									"pm.environment.set(\"commerceTEST_IdGoogle\", body.data.idGoogle)\r",
+									"pm.environment.set(\"commerceTEST_IdGoogle\", body.data.placeId)\r",
 									"pm.environment.set(\"commerceTEST_Destination\", body.data.destination);\r",
 									"pm.environment.set(\"commerceTEST_UrlTripAdvisor\", body.data.urlTripAdvisor);\r",
 									"pm.environment.set(\"commerceTEST_UrlTrivago\", body.data.urlTrivago);\r",
@@ -2283,7 +2282,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\r\n    \"destination\": \"google\",\r\n    \"idGoogle\": \"ChIJmS2EJsMcQg0RG-ZuumVAtOg\",\r\n    \"urlTripAdvisor\": \"test\",\r\n    \"urlTrivago\": \"test\",\r\n    \"urlBooking\": \"test\",\r\n    \"urlFacebook\": \"test\",\r\n    \"urlWebsite\": \"test\",\r\n    \"urlIg\": \"test\",\r\n    \"urlTwitter\": \"test\",\r\n    \"name\": \"test test test\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Seseña\",\r\n    \"country\": \"España\",\r\n    \"categoryId\": 1,\r\n    \"logoUrl\": \"https://x-tap.club/\",\r\n    \"statusId\": 11,\r\n    \"showWebsite\": true,\r\n    \"showIg\": true,\r\n    \"showTwitter\": true,\r\n    \"showFacebook\": true,\r\n    \"showAddress\": true,\r\n    \"showLogo\": true,\r\n    \"activeSubscription\": true\r\n}",
+							"raw": "{\r\n    \"destination\": \"google\",\r\n    \"placeId\": \"ChIJmS2EJsMcQg0RG-ZuumVAtOg\",\r\n    \"urlTripAdvisor\": \"test\",\r\n    \"urlTrivago\": \"test\",\r\n    \"urlBooking\": \"test\",\r\n    \"urlFacebook\": \"test\",\r\n    \"urlWebsite\": \"test\",\r\n    \"urlIg\": \"test\",\r\n    \"urlTwitter\": \"test\",\r\n    \"name\": \"test test test\",\r\n    \"address\": \"C. la Vega, 36, local 15-16, 45223 Seseña, Toledo, Spain\",\r\n    \"city\": \"Seseña\",\r\n    \"country\": \"España\",\r\n    \"categoryId\": 1,\r\n    \"logoUrl\": \"https://x-tap.club/\",\r\n    \"statusId\": 11,\r\n    \"showWebsite\": true,\r\n    \"showIg\": true,\r\n    \"showTwitter\": true,\r\n    \"showFacebook\": true,\r\n    \"showAddress\": true,\r\n    \"showLogo\": true,\r\n    \"activeSubscription\": true\r\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2304,7 +2303,7 @@
 					"response": []
 				},
 				{
-					"name": "assgin-role",
+					"name": "4.4.- assgin-role",
 					"event": [
 						{
 							"listen": "test",
@@ -2356,7 +2355,7 @@
 					"response": []
 				},
 				{
-					"name": "update user data",
+					"name": "4.5.- update user data",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2463,7 +2462,7 @@
 					"response": []
 				},
 				{
-					"name": "update status or employee of a card Copy",
+					"name": "4.6.- update status or employee of a card Copy",
 					"request": {
 						"auth": {
 							"type": "bearer",
@@ -2500,7 +2499,7 @@
 					"response": []
 				},
 				{
-					"name": "update category",
+					"name": "4.7.- update category",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2562,7 +2561,7 @@
 					"response": []
 				},
 				{
-					"name": "update productPacks",
+					"name": "4.8.- update productPacks",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2640,7 +2639,7 @@
 					"response": []
 				},
 				{
-					"name": "update employee",
+					"name": "4.9.- update employee",
 					"event": [
 						{
 							"listen": "test",
@@ -2717,7 +2716,7 @@
 					"response": []
 				},
 				{
-					"name": "update product Category Copy",
+					"name": "4.10.- update product Category Copy",
 					"event": [
 						{
 							"listen": "prerequest",
@@ -2781,10 +2780,10 @@
 			]
 		},
 		{
-			"name": "Traer datos modificados",
+			"name": "5.- Traer datos modificados",
 			"item": [
 				{
-					"name": "get commerce info",
+					"name": "5.1.- get commerce info",
 					"event": [
 						{
 							"listen": "test",
@@ -2802,20 +2801,19 @@
 									"    const response = pm.response.json();\r",
 									"    pm.expect(response.uuid).to.eql(pm.environment.get(\"commerceTEST_Uuid\"));\r",
 									"    pm.expect(response.id).to.eql(parseInt(pm.environment.get(\"commerceTEST_Id\")));\r",
-									"    pm.expect(response.destination).to.eql(pm.environment.get(\"commerceTEST_Destination\"));\r",
-									"    pm.expect(response.idGoogle).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
-									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
-									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
-									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
-									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
-									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
-									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
-									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"null\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
+									"    pm.expect(response.placeId).to.eql(pm.environment.get(\"commerceTEST_IdGoogle\"));\r",
+									"    pm.expect(response.urlTripAdvisor).to.eql(pm.environment.get(\"commerceTEST_UrlTripAdvisor\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTripAdvisor\"));\r",
+									"    pm.expect(response.urlTrivago).to.eql(pm.environment.get(\"commerceTEST_UrlTrivago\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTrivago\"));\r",
+									"    pm.expect(response.urlBooking).to.eql(pm.environment.get(\"commerceTEST_UrlBooking\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlBooking\"));\r",
+									"    pm.expect(response.urlFacebook).to.eql(pm.environment.get(\"commerceTEST_UrlFacebook\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlFacebook\"));\r",
+									"    pm.expect(response.urlWebsite).to.eql(pm.environment.get(\"commerceTEST_UrlWebsite\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlWebsite\"));\r",
+									"    pm.expect(response.urlIg).to.eql(pm.environment.get(\"commerceTEST_UrlIg\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlIg\"));\r",
+									"    pm.expect(response.urlTwitter).to.eql(pm.environment.get(\"commerceTEST_UrlTwitter\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_UrlTwitter\"));\r",
 									"    pm.expect(response.name).to.eql(pm.environment.get(\"commerceTEST_Name\"));\r",
 									"    pm.expect(response.address).to.eql(pm.environment.get(\"commerceTEST_Address\"));\r",
 									"    pm.expect(response.city).to.eql(pm.environment.get(\"commerceTEST_City\"));\r",
 									"    pm.expect(response.country).to.eql(pm.environment.get(\"commerceTEST_Country\"));\r",
-									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"null\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
+									"    pm.expect(response.logoUrl).to.eql(pm.environment.get(\"commerceTEST_LogoUrl\") === \"undefined\" ? null : pm.environment.get(\"commerceTEST_LogoUrl\"));\r",
 									"    pm.expect(response.totalReviews).to.eql(parseInt(pm.environment.get(\"commerceTEST_TotalReviews\")));\r",
 									"    pm.expect(response.rating).to.eql(parseFloat(pm.environment.get(\"commerceTEST_Rating\")));\r",
 									"    pm.expect(response.statusId).to.eql(pm.environment.get(\"commerceTEST_Status\"));\r",
@@ -2829,6 +2827,7 @@
 									"    pm.expect(response.showAddress).to.eql(pm.environment.get(\"commerceTEST_ShowAddress\"));\r",
 									"    pm.expect(response.showLogo).to.eql(pm.environment.get(\"commerceTEST_ShowLogo\"));\r",
 									"    pm.expect(response.activeSubscription).to.eql(pm.environment.get(\"commerceTEST_ActiveSubscription\"));\r",
+									"    pm.expect(response.managers[0]).to.not.empty;\r",
 									"});\r",
 									""
 								],
@@ -2876,7 +2875,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all users",
+					"name": "5.2.- Get all users",
 					"event": [
 						{
 							"listen": "test",
@@ -2935,7 +2934,7 @@
 					"response": []
 				},
 				{
-					"name": "Get user data",
+					"name": "5.3.- Get user data",
 					"event": [
 						{
 							"listen": "test",
@@ -2991,7 +2990,7 @@
 					"response": []
 				},
 				{
-					"name": "get data of employee Copy 2",
+					"name": "5.4.- get data of employee Copy 2",
 					"event": [
 						{
 							"listen": "test",
@@ -3057,7 +3056,7 @@
 					"response": []
 				},
 				{
-					"name": "get all categories",
+					"name": "5.5.- get all categories",
 					"event": [
 						{
 							"listen": "test",
@@ -3110,7 +3109,7 @@
 					"response": []
 				},
 				{
-					"name": "get all productPacks",
+					"name": "5.6.- get all productPacks",
 					"event": [
 						{
 							"listen": "test",
@@ -3171,7 +3170,7 @@
 					"response": []
 				},
 				{
-					"name": "get all employees Copy",
+					"name": "5.7.- get all employees Copy",
 					"event": [
 						{
 							"listen": "test",
@@ -3249,7 +3248,7 @@
 					"response": []
 				},
 				{
-					"name": "get all product categories Copy 2",
+					"name": "5.8.- get all product categories Copy 2",
 					"event": [
 						{
 							"listen": "test",
@@ -3304,10 +3303,10 @@
 			]
 		},
 		{
-			"name": "Eliminar datos",
+			"name": "6.- Eliminar datos",
 			"item": [
 				{
-					"name": "delete commerce",
+					"name": "6.1.- delete commerce",
 					"event": [
 						{
 							"listen": "test",
@@ -3349,7 +3348,7 @@
 					"response": []
 				},
 				{
-					"name": "delete user owner",
+					"name": "6.2.- delete user owner",
 					"event": [
 						{
 							"listen": "test",
@@ -3391,7 +3390,7 @@
 					"response": []
 				},
 				{
-					"name": "delete user client",
+					"name": "6.3.- delete user client",
 					"event": [
 						{
 							"listen": "test",
@@ -3433,7 +3432,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all users for manager",
+					"name": "6.4.- Get all users for manager",
 					"event": [
 						{
 							"listen": "test",
@@ -3487,7 +3486,7 @@
 					"response": []
 				},
 				{
-					"name": "delete user manager",
+					"name": "6.5.- delete user manager",
 					"event": [
 						{
 							"listen": "test",
@@ -3529,7 +3528,7 @@
 					"response": []
 				},
 				{
-					"name": "dalete category",
+					"name": "6.6.- dalete category",
 					"event": [
 						{
 							"listen": "test",
@@ -3571,7 +3570,7 @@
 					"response": []
 				},
 				{
-					"name": "delete productPacks",
+					"name": "6.7.- delete productPacks",
 					"event": [
 						{
 							"listen": "test",
@@ -3622,7 +3621,7 @@
 					"response": []
 				},
 				{
-					"name": "delete product category",
+					"name": "6.8.- delete product category",
 					"event": [
 						{
 							"listen": "test",
@@ -3666,10 +3665,10 @@
 			]
 		},
 		{
-			"name": "Verificar datos eliminados",
+			"name": "7.- Verificar datos eliminados",
 			"item": [
 				{
-					"name": "get all commerce",
+					"name": "7.1.- get all commerce",
 					"event": [
 						{
 							"listen": "test",
@@ -3755,7 +3754,7 @@
 					"response": []
 				},
 				{
-					"name": "Get all users",
+					"name": "7.2.- Get all users",
 					"event": [
 						{
 							"listen": "test",
@@ -3830,7 +3829,7 @@
 					"response": []
 				},
 				{
-					"name": "get all categories",
+					"name": "7.3.- get all categories",
 					"event": [
 						{
 							"listen": "test",
@@ -3901,7 +3900,7 @@
 					"response": []
 				},
 				{
-					"name": "get all productPacks",
+					"name": "7.4.- get all productPacks",
 					"event": [
 						{
 							"listen": "test",
@@ -3969,7 +3968,7 @@
 					"response": []
 				},
 				{
-					"name": "get all product categories",
+					"name": "7.5.- get all product categories",
 					"event": [
 						{
 							"listen": "test",
